@@ -15,6 +15,14 @@ def my_makedirs(path):
     if not os.path.isdir(path):
         os.makedirs(path)
 
+def move_glob(dst_path, pathname, recursive=True):
+    i= 0
+    for p in glob.glob(pathname, recursive=recursive):
+        i+=1
+        #shutil.move(p, dst_path)
+        shutil.copy(p, dst_path)
+        print('No.', i, 'sample has been transfered!')
+
 
 def mat_plot(i, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame):
     # シミュレーションの結果を入力
@@ -94,6 +102,17 @@ def mat_plot(i, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame):
 
 
 if __name__ == '__main__':
+    # copy txt files from simulation output folder on D driver to the analysis folder on C driver
+    try:
+        dst_path = './output_txt'
+        my_makedirs(dst_path)
+        print(dst_path)
+        move_glob(dst_path, 'D:\\Nbody simulation\\galaxy_simulator\\output_txt\\*.txt')
+
+    except:
+        print('output files already been transfered!')
+        raise
+
     size_galaxy_1 = 5
     size_galaxy_2 = 1
     ratio = size_galaxy_1 / (size_galaxy_1 + size_galaxy_2)
