@@ -24,7 +24,7 @@ def move_glob(dst_path, pathname, recursive=True):
         print('No.', i, 'sample has been transfered!')
 
 
-def mat_plot(i, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame):
+def mat_plot(i, file_id, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame):
     # シミュレーションの結果を入力
     # x_list = [float(s) for s in x_list[0:num_galaxy_1]]
     # y_list = [float(s) for s in y_list[0:num_galaxy_1]]
@@ -81,7 +81,7 @@ def mat_plot(i, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame):
     theta = ['BH_tree_theta:' + '\n' + ' 0.9']
     leg3 = plt.legend(theta, loc='upper left', bbox_to_anchor=(1, 0.6), fontsize=fontsize_)
 
-    real_time = ['Time: ' + '\n' + str(i * year_per_frame) + '_years']
+    real_time = ['Time: ' + '\n' + str(i * year_current_frame) + '_years']
     leg4 = plt.legend(real_time, loc='upper left', bbox_to_anchor=(1, 0.5), fontsize=fontsize_)
 
     epoch = ['Frame_No.' + '\n' + str(i)]
@@ -103,7 +103,7 @@ def mat_plot(i, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame):
     Nbody_output_jpg = './output_jpg'
     my_makedirs(Nbody_output_jpg)
 
-    filename = Nbody_output_jpg + "/" + str(i) + ".png"
+    filename = Nbody_output_jpg + "/" + str(file_id) + ".png"
     plt.savefig(filename, bbox_inches="tight")
     plt.close()
 
@@ -120,44 +120,56 @@ if __name__ == '__main__':
         print('output files already been transfered!')
         raise
 
+    # setting simulation parameters
     size_galaxy_1 = 5
     size_galaxy_2 = 1
     ratio = size_galaxy_1 / (size_galaxy_1 + size_galaxy_2)
     print(ratio)
 
+    # read simulation output txt files
     #path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt')
     path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_txt')
 
     rel_path = os.path.relpath(path) + '/*'
     print(rel_path)
 
-    file_name_list = []
-    idx_ = -1
-    for txt_path in glob.glob(rel_path):
-        idx_ += 1
-        file_name = os.path.splitext(os.path.basename(txt_path))
-        print(idx_, file_name, txt_path)
-        file_name_list.append(txt_path)
-
-    # sort txt by time-series
-    # path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt')
-    rel_path = os.path.relpath(path) + '/*'
-    print(rel_path)
-
-    file_name_list = []
-    file_path_list = []
+    file_name_list1 = []
     idx_ = -1
     for txt_path in glob.glob(rel_path):
         idx_ += 1
         file_name = os.path.splitext(os.path.basename(txt_path))[0]
         print(idx_, txt_path, file_name)
-        file_path_list.append(txt_path)
-        file_name_list.append(file_name)
+        file_name_list1.append(file_name)
 
+    # read images files already generated and compare with simulation output txt files
+    # generate difference between these two folders of files, then only visulize the undone txt files into images
+    # path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt')
+    path2 = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    rel_path2 = os.path.relpath(path2) + '/*'
+    #print(rel_path)
+
+    file_name_list2 = []
+    idx_ = -1
+    for txt_path in glob.glob(rel_path2):
+        idx_ += 1
+        file_name = os.path.splitext(os.path.basename(txt_path))[0]
+        print(idx_, txt_path, file_name)
+        file_name_list2.append(file_name)
+
+    set1 = set(file_name_list1)
+    set2 = set(file_name_list2)
+    print(len(file_name_list1), len(file_name_list2))
+
+    file_name_list = list(set1.difference(set2))
+    print(file_name_list)
+
+
+
+    # sort txt by time-series
     file_name_list = [int(s) for s in file_name_list]
     path_time_series_list = []
     for idx, txt_name in enumerate(sorted(file_name_list)):
-        print(idx, txt_name)
+        #print(idx, txt_name)
 
         rel_path = os.path.relpath(path)
 
@@ -165,9 +177,9 @@ if __name__ == '__main__':
         print(path_time_series)
         path_time_series_list.append(path_time_series)
 
-    # time_series
 
-    # delta_iteration
+    # calculate delta_iteration
+    delta_iteration_list = []
     for index in range(2):
         print(index)
 
@@ -175,15 +187,21 @@ if __name__ == '__main__':
         txt_files = path_time_series_list
         delta_iteration = os.path.splitext(os.path.basename(txt_files[index]))[0]
         delta_iteration = int(delta_iteration)
-        print(delta_iteration)
+        delta_iteration_list.append(delta_iteration)
+
+    delta_iteration = delta_iteration_list[1]-delta_iteration_list[0]
+    print('delta_iteration:', delta_iteration)
+    print(len(path_time_series_list))
 
     year_per_iteration = 100
-    year_per_frame = year_per_iteration * delta_iteration
-    print(year_per_frame)
+    year_current_frame = year_per_iteration * delta_iteration
+    print('year_current_frame:', year_current_frame)
 
-    # for index in range(1):
-    for index in range(len(path_time_series_list)):
-        print(index)
+    # extract txt files cordinates and visualize it using matplotlib
+    for index, delta_file_path in enumerate(path_time_series_list):
+        print(index, delta_file_path)
+        # txt file id
+        file_id = os.path.splitext(os.path.basename(delta_file_path))[0]
 
         # read the prediction text files
         txt_files = path_time_series_list
@@ -238,7 +256,7 @@ if __name__ == '__main__':
         num_galaxy_2 = len(x_list) - num_galaxy_1
         # print(num_galaxy_2)
 
-        mat_plot(index, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame)
+        mat_plot(index, file_id, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame)
 
 
 
