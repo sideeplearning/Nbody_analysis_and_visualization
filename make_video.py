@@ -69,7 +69,7 @@ if __name__ == '__main__':
     write_fps = 30
 
     out = cv2.VideoWriter(
-        './output_videos/demo_video_' + str(skip) + str(write_fps) + '.mp4',
+        './output_videos/demo_video_skip' + str(skip) + '_fps_' + str(write_fps) + '.mp4',
         fourcc,
         write_fps,
         (w, h))

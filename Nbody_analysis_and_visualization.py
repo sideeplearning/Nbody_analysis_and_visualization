@@ -39,15 +39,22 @@ def mat_plot(i, x_list, y_list, num_galaxy_1, num_galaxy_2, year_per_frame):
     x_g2 = np.array(x_list_g2)
     y_g2 = np.array(y_list_g2)
 
-    color_list = ['blue', 'red']
+
     fontsize_ = 25
 
     # 散布図を描画
     fig = plt.figure(figsize=(15, 15))
 
     ax = plt.gca()
-    # background color
+
+    # please change plot color here!
+    # background color white, star RGB
     ax.set_facecolor('w')
+    color_list = ['blue', 'red']
+
+    # background color white, star RGB
+    #ax.set_facecolor('black')
+    #color_list = ['white', 'white']
 
     plt.scatter(x_g1, y_g1, s=1, color=color_list[0], label="galaxy_01")
     plt.scatter(x_g2, y_g2, s=1, color=color_list[1], label="galaxy_02")
@@ -285,7 +292,7 @@ if __name__ == '__main__':
     write_fps = 10
 
     out = cv2.VideoWriter(
-        './output_videos/demo_video_fps1.mp4',
+        './output_videos/demo_video_fps_' + str(write_fps) + '.mp4',
         fourcc,
         write_fps,
         (w, h))
