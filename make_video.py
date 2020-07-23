@@ -47,10 +47,15 @@ if __name__ == '__main__':
     img_list = []
     # path = './output_jpg/'
     for p in img_path_time_series_list:
-        print('index:', p)
-        img = cv2.imread(p)
-        img_list.append(img)
-        # print(len(os.listdir(path)))
+        print('path:', p)
+        file_num = os.path.splitext(os.path.basename(p))[0]
+        file_num = int(file_num)
+        print(file_num)
+        skip = 5
+        if file_num % skip == 0:
+            img = cv2.imread(p)
+            img_list.append(img)
+            # print(len(os.listdir(path)))
 
     img_list[0].shape
 
@@ -61,10 +66,10 @@ if __name__ == '__main__':
     output_dir = './output_videos/'
     my_makedirs(output_dir)
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-    write_fps = 50
+    write_fps = 30
 
     out = cv2.VideoWriter(
-        './output_videos/demo_video_fps1.mp4',
+        './output_videos/demo_video_' + str(skip) + str(write_fps) + '.mp4',
         fourcc,
         write_fps,
         (w, h))
