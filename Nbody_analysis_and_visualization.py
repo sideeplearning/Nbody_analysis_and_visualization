@@ -24,7 +24,7 @@ def move_glob(dst_path, pathname, recursive=True):
         print('No.', i, 'sample has been transfered!')
 
 
-def mat_plot(i, file_id, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame):
+def mat_plot(i, file_id, delta_iteration, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame):
     # シミュレーションの結果を入力
     # x_list = [float(s) for s in x_list[0:num_galaxy_1]]
     # y_list = [float(s) for s in y_list[0:num_galaxy_1]]
@@ -98,7 +98,7 @@ def mat_plot(i, file_id, x_list, y_list, num_galaxy_1, num_galaxy_2, year_curren
     fig.add_artist(leg5)
     fig.add_artist(leg6)
 
-    title_ = ("No." + str('_') + str(i))
+    title_ = ("No." + str('_') + str(int(file_id)/delta_iteration))
     plt.title(title_, fontsize=fontsize_)
     Nbody_output_jpg = './output_jpg'
     my_makedirs(Nbody_output_jpg)
@@ -256,7 +256,7 @@ if __name__ == '__main__':
         num_galaxy_2 = len(x_list) - num_galaxy_1
         # print(num_galaxy_2)
 
-        mat_plot(index, file_id, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame)
+        mat_plot(index, file_id, delta_iteration, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame)
 
 
 
@@ -326,6 +326,7 @@ if __name__ == '__main__':
 
         for idx in range(len(img_list)):
             # print(img_list[idx])
-            out.write(img_list[idx])
+            # out.write(img_list[idx])
+            pass
         print('output_videos_completed')
 
