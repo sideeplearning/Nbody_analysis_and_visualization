@@ -61,8 +61,8 @@ def mat_plot(i, file_id, x_list, y_list, num_galaxy_1, num_galaxy_2, year_curren
 
     plt.xlabel('x-axis', fontsize=fontsize_)
     plt.ylabel('y-axis', fontsize=fontsize_)
-    plt.xlim(-20, +20)
-    plt.ylim(-20, +20)
+    plt.xlim(-30, +30)
+    plt.ylim(-30, +30)
 
     # plt.colorbar(label='label')
     # plt.grid(True)
@@ -290,33 +290,42 @@ if __name__ == '__main__':
         print(path_time_series)
         img_path_time_series_list.append(path_time_series)
 
-    img_list = []
-    # path = './output_jpg/'
-    for p in img_path_time_series_list:
-        print('index:', p)
-        img = cv2.imread(p)
-        img_list.append(img)
-        # print(len(os.listdir(path)))
+    part = len(img_path_time_series_list)//3
+    print(part)
 
-    img_list[0].shape
+    for i in range(1):
+        img_path_time_series_part = img_path_time_series_list[:part]
+        img_list = []
+        # path = './output_jpg/'
+        for p in img_path_time_series_part:
+            print('index:', p)
+            try:
+                img = cv2.imread(p)
+                img_list.append(img)
+                # print(len(os.listdir(path)))
+            except:
+                print('too many images caused OpenCV memory_lick')
+                pass
 
-    h = img_list[0].shape[0]
-    w = img_list[0].shape[1]
-    print(w, h)
+        img_list[0].shape
 
-    output_dir = './output_videos/'
-    my_makedirs(output_dir)
-    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-    write_fps = 10
+        h = img_list[0].shape[0]
+        w = img_list[0].shape[1]
+        print(w, h)
 
-    out = cv2.VideoWriter(
-        './output_videos/demo_video_fps_' + str(write_fps) + '.mp4',
-        fourcc,
-        write_fps,
-        (w, h))
+        output_dir = './output_videos/'
+        my_makedirs(output_dir)
+        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        write_fps = 10
 
-    for idx in range(len(img_list)):
-        # print(img_list[idx])
-        out.write(img_list[idx])
-    print('output_videos_completed')
+        out = cv2.VideoWriter(
+            './output_videos/demo_video_fps_' + str(write_fps) + '.mp4',
+            fourcc,
+            write_fps,
+            (w, h))
+
+        for idx in range(len(img_list)):
+            # print(img_list[idx])
+            out.write(img_list[idx])
+        print('output_videos_completed')
 
