@@ -312,12 +312,12 @@ if __name__ == '__main__':
         h = img_list[0].shape[0]
         w = img_list[0].shape[1]
         print(w, h)
-
+        '''
         output_dir = './output_videos/'
         my_makedirs(output_dir)
-        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
         write_fps = 10
-
+        
         out = cv2.VideoWriter(
             './output_videos/demo_video_fps_' + str(write_fps) + '.mp4',
             fourcc,
@@ -328,5 +328,6 @@ if __name__ == '__main__':
             # print(img_list[idx])
             # out.write(img_list[idx])
             pass
+        '''
         print('output_videos_completed')
 
