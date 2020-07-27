@@ -114,7 +114,8 @@ if __name__ == '__main__':
         dst_path = './output_txt'
         my_makedirs(dst_path)
         print(dst_path)
-        move_glob(dst_path, 'D:\\Nbody simulation\\galaxy_simulator\\output_txt\\*.txt')
+        #move_glob(dst_path, 'D:\\Nbody simulation\\galaxy_simulator\\output_txt\\*.txt')
+        move_glob(dst_path, 'C:\\Users\\Si\\Desktop\C++\\Nbody_simulation\\Nbody_simulator\\Nbody_simulator\\output_txt\\*.txt') #office
 
     except:
         print('output files already been transfered!')
@@ -127,9 +128,8 @@ if __name__ == '__main__':
     print(ratio)
 
     # read simulation output txt files
-    #path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt')
-    path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_txt')
-
+    # path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_txt')
+    path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt') #office
     rel_path = os.path.relpath(path) + '/*'
     print(rel_path)
 
@@ -142,9 +142,10 @@ if __name__ == '__main__':
         file_name_list1.append(file_name)
 
     # read images files already generated and compare with simulation output txt files
-    # generate difference between these two folders of files, then only visulize the undone txt files into images
-    # path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt')
-    path2 = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    # generate difference between these two folders of files, then only visualize the undone txt files into images
+
+    #path2 = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    path2 = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_analysis_and_visualization\output_jpg') #office
     rel_path2 = os.path.relpath(path2) + '/*'
     #print(rel_path)
 
@@ -163,7 +164,9 @@ if __name__ == '__main__':
     file_name_list = list(set1.difference(set2))
     print(file_name_list)
 
-
+    if len(file_name_list) == 0:
+        print('all txt files already been transfered into images...')
+        print('program terminated nominally')
 
     # sort txt by time-series
     file_name_list = [int(s) for s in file_name_list]
@@ -185,9 +188,15 @@ if __name__ == '__main__':
 
         # read the prediction text files
         txt_files = path_time_series_list
-        delta_iteration = os.path.splitext(os.path.basename(txt_files[index]))[0]
-        delta_iteration = int(delta_iteration)
-        delta_iteration_list.append(delta_iteration)
+        try:
+            delta_iteration = os.path.splitext(os.path.basename(txt_files[index]))[0]
+            delta_iteration = int(delta_iteration)
+            delta_iteration_list.append(delta_iteration)
+        except IndexError:
+            print('all txt files already been transfered into images...')
+            print('program terminated nominally')
+            raise
+
 
     delta_iteration = delta_iteration_list[1]-delta_iteration_list[0]
     print('delta_iteration:', delta_iteration)
@@ -256,12 +265,15 @@ if __name__ == '__main__':
         num_galaxy_2 = len(x_list) - num_galaxy_1
         # print(num_galaxy_2)
 
-        mat_plot(index, file_id, delta_iteration, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame)
+        # start from checkpoint of the image's index already generated!
+        index_ck = len(file_name_list2) + index
+        mat_plot(index_ck, file_id, delta_iteration, x_list, y_list, num_galaxy_1, num_galaxy_2, year_current_frame)
 
 
 
     # demo_videos
-    path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    #path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_analysis_and_visualization\output_jpg') #office
     rel_path = os.path.relpath(path) + '/*'
     print(rel_path)
 
