@@ -114,8 +114,8 @@ if __name__ == '__main__':
         dst_path = './output_txt'
         my_makedirs(dst_path)
         print(dst_path)
-        #move_glob(dst_path, 'D:\\Nbody simulation\\galaxy_simulator\\output_txt\\*.txt')
-        move_glob(dst_path, 'C:\\Users\\Si\\Desktop\C++\\Nbody_simulation\\Nbody_simulator\\Nbody_simulator\\output_txt\\*.txt') #office
+        move_glob(dst_path, 'D:\\Nbody simulation\\galaxy_simulator\\output_txt\\*.txt')
+        #move_glob(dst_path, 'C:\\Users\\Si\\Desktop\C++\\Nbody_simulation\\Nbody_simulator\\Nbody_simulator\\output_txt\\*.txt') #office
 
     except:
         print('output files already been transfered!')
@@ -128,8 +128,8 @@ if __name__ == '__main__':
     print(ratio)
 
     # read simulation output txt files
-    # path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_txt')
-    path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt') #office
+    path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_txt')
+    #path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_simulator\output_txt') #office
     rel_path = os.path.relpath(path) + '/*'
     print(rel_path)
 
@@ -144,8 +144,8 @@ if __name__ == '__main__':
     # read images files already generated and compare with simulation output txt files
     # generate difference between these two folders of files, then only visualize the undone txt files into images
 
-    #path2 = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
-    path2 = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_analysis_and_visualization\output_jpg') #office
+    path2 = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    #path2 = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_analysis_and_visualization\output_jpg') #office
     rel_path2 = os.path.relpath(path2) + '/*'
     #print(rel_path)
 
@@ -272,8 +272,8 @@ if __name__ == '__main__':
 
 
     # demo_videos
-    #path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
-    path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_analysis_and_visualization\output_jpg') #office
+    path = Path(r'C:\Users\user\Desktop\Nbody_analysis_and_visualization\output_jpg')
+    #path = Path(r'C:\Users\Si\Desktop\C++\Nbody_simulation\Nbody_simulator\Nbody_analysis_and_visualization\output_jpg') #office
     rel_path = os.path.relpath(path) + '/*'
     print(rel_path)
 
